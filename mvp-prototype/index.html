@@ -1,0 +1,626 @@
+<title>אב־טיפוס חיבור עסקים ומשקיעים</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: a phone-sized app on the right, a presenter side panel (funnel, scope) on the left. Stacks on mobile. */
+:root{
+  --bg:#E9EFEC; --phone:#F6F9F8; --surface:#FFFFFF; --surface2:#EDF3F1; --ink:#12201C; --muted:#586966; --line:#D3DDDA;
+  --accent:#0C6A58; --accent-ink:#FFFFFF; --accent-soft:#D9EFE8;
+  --warn:#8A5200; --warn-soft:#FAEBCF; --bad:#B0342A; --bad-soft:#F7DEDA; --good:#17703A; --good-soft:#D9EFE0;
+  --shadow:0 1px 2px rgba(0,0,0,.06),0 10px 30px rgba(18,32,28,.10);
+  --font:'Heebo',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1311; --phone:#111B18; --surface:#18241F; --surface2:#1F2E29; --ink:#E6F0EC; --muted:#9DB0AA; --line:#2B3C36;
+  --accent:#3FC0A4; --accent-ink:#06201A; --accent-soft:#173A32;
+  --warn:#F0B35A; --warn-soft:#3A2B10; --bad:#F08A80; --bad-soft:#3C1A17; --good:#6FD598; --good-soft:#143323;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.4); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1311; --phone:#111B18; --surface:#18241F; --surface2:#1F2E29; --ink:#E6F0EC; --muted:#9DB0AA; --line:#2B3C36;
+  --accent:#3FC0A4; --accent-ink:#06201A; --accent-soft:#173A32;
+  --warn:#F0B35A; --warn-soft:#3A2B10; --bad:#F08A80; --bad-soft:#3C1A17; --good:#6FD598; --good-soft:#143323;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.4); color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;
+  padding-block:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+h1{font-size:20px;font-weight:800;text-wrap:balance}
+h2{font-size:17px;font-weight:700;text-wrap:balance}
+h3{font-size:14px;font-weight:700}
+.wrap{max-width:1020px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.top .sub{color:var(--muted);font-size:13px}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px}
+.seg button{border:0;background:none;padding:6px 14px;border-radius:7px;cursor:pointer;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.grid{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.phone{position:relative;height:790px;display:flex;flex-direction:column;background:var(--phone);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);overflow:hidden;max-width:100%}
+@media (max-width:560px){.phone{height:calc(100dvh - 120px);min-height:560px;border-radius:18px}}
+.ph-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.ph-head h2{font-size:16px}
+.demo-banner{background:var(--warn-soft);color:var(--warn);font-size:12px;font-weight:600;padding:5px 16px;text-align:center}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px;display:flex;flex-direction:column;gap:14px}
+.tabs{display:flex;background:var(--surface);border-top:1px solid var(--line)}
+.tabs button{flex:1;border:0;background:none;padding:11px 4px 12px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);position:relative}
+.tabs button[aria-current="page"]{color:var(--accent)}
+.tabs button[aria-current="page"]::after{content:"";position:absolute;inset-inline:22%;top:0;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.badge{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:11px;line-height:18px;margin-inline-start:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.flat{background:var(--surface2);border-color:transparent}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;min-width:0}
+.row.wrap2{flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:10px}
+.muted{color:var(--muted)} .small{font-size:12.5px} .tiny{font-size:11.5px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer;text-align:center;min-height:42px}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.bad{color:var(--bad);border-color:var(--bad)}
+.btn.demo{border-style:dashed;color:var(--muted);font-weight:500;font-size:13px;min-height:36px;padding:7px 10px}
+.btn.link{border:0;background:none;color:var(--accent);padding:4px 0;min-height:0;text-align:start}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.tabs button:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}.btns>.btn{flex:1 1 120px}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;min-width:0}
+label.f .hint{font-weight:400;color:var(--muted);font-size:12px}
+input[type=text],select,textarea{width:100%;border:1px solid var(--line);background:var(--surface2);border-radius:9px;padding:9px 11px;min-height:40px}
+textarea{resize:vertical;min-height:64px}
+input.err{border-color:var(--bad)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.req{color:var(--bad)}
+.chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--good-soft);color:var(--good)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
+button.chip{border:1px solid var(--line);cursor:pointer;padding:5px 12px}
+button.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.notice{border-radius:10px;padding:10px 12px;font-size:13px;background:var(--surface2)}
+.notice.warn{background:var(--warn-soft);color:var(--warn)} .notice.bad{background:var(--bad-soft);color:var(--bad)} .notice.ok{background:var(--good-soft);color:var(--good)} .notice.acc{background:var(--accent-soft);color:var(--accent)}
+.meter{display:flex;gap:3px;direction:ltr}
+.meter i{flex:1;height:8px;border-radius:2px;background:var(--line)}
+.meter i.on{background:var(--accent)}
+.score{display:flex;align-items:baseline;gap:6px}.score b{font-size:26px;line-height:1}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:var(--surface2);border-radius:9px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--muted)}
+.stat b{font-size:14px;color:var(--ink);font-weight:700}
+.nodata{font-style:normal;font-weight:500;color:var(--muted)}
+.ask{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ask div{background:var(--accent-soft);color:var(--accent);border-radius:10px;padding:8px 10px;font-size:12px}
+.ask b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
+.deck{position:relative;min-height:470px;touch-action:pan-y}
+.swc{position:absolute;inset:0 0 auto 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);cursor:grab;user-select:none;transition:transform .18s ease;will-change:transform}
+.swc.drag{transition:none;cursor:grabbing}
+.swc .tag{position:absolute;top:14px;padding:3px 12px;border:2px solid;border-radius:8px;font-weight:800;opacity:0;pointer-events:none}
+.swc .tag.l{left:14px;color:var(--good);transform:rotate(-8deg)} .swc .tag.p{right:14px;color:var(--bad);transform:rotate(8deg)}
+.deckbtns{display:flex;gap:18px;justify-content:center;direction:ltr;margin-top:6px}
+.round{width:56px;height:56px;border-radius:50%;border:2px solid var(--line);background:var(--surface);font-size:22px;cursor:pointer;font-weight:700}
+.round.yes{color:var(--good);border-color:var(--good)} .round.no{color:var(--bad);border-color:var(--bad)}
+.avatar{width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:19px;flex:none}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 6px;text-align:start;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px}
+.scroll-x{overflow-x:auto}
+.steps{display:flex;gap:4px}
+.steps div{flex:1;text-align:center;font-size:11px;color:var(--muted);border-top:3px solid var(--line);padding-top:4px}
+.steps div.done{border-color:var(--accent);color:var(--accent);font-weight:700}
+.bubble{border-radius:12px;padding:8px 11px;font-size:13px;max-width:92%;background:var(--surface2)}
+.bubble.biz{background:var(--accent-soft);align-self:flex-start}.bubble.inv{align-self:flex-end}
+.bubble small{display:block;color:var(--muted);font-size:11px}
+.funnel{display:flex;flex-direction:column;gap:8px}
+.fbar{display:grid;grid-template-columns:90px 1fr 36px;gap:8px;align-items:center;font-size:13px}
+.fbar span.t{height:14px;border-radius:4px;background:var(--surface2);position:relative;overflow:hidden}
+.fbar span.t i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:4px;direction:ltr}
+html[dir=rtl] .fbar span.t i{inset:0 0 0 auto}
+.fbar b{font-variant-numeric:tabular-nums;text-align:end}
+.toast{position:absolute;inset-inline:16px;bottom:70px;background:var(--ink);color:var(--bg);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:600;text-align:center;z-index:5}
+.side{display:flex;flex-direction:column;gap:14px;min-width:0}
+details summary{cursor:pointer;font-weight:700}
+ul.clean{margin:6px 0 0;padding-inline-start:18px;display:flex;flex-direction:column;gap:3px}
+.sig{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:var(--surface2)}
+.big{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.swc{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>אב־טיפוס: חיבור בין בעלי עסקים קטנים למשקיעים</h1>
+      <p class="sub">הדגמה לחיצה על כל זרימת ה־MVP. נתוני דוגמה, בלי שרת ובלי כסף אמיתי.</p>
+    </div>
+    <div class="ctl">
+      <div class="seg" role="group" aria-label="תפקיד בדמו">
+        <button id="roleBiz" data-act="role" data-arg="biz">בעל עסק</button>
+        <button id="roleInv" data-act="role" data-arg="inv">משקיע</button>
+      </div>
+      <button class="btn demo" id="resetBtn" data-act="reset">איפוס הדמו</button>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="phone" id="phone"></div>
+    <aside class="side" id="side"></aside>
+  </div>
+</div>
+
+<script>
+'use strict';
+const KEY='mvp-demo-v1';
+const SECTORS=['מכולת','מאפייה','בית קפה','מספרה','מסעדה','חנות','סטודיו','שירותים'];
+const FEE=0.008, MAXTERM=10, AUDIT_GAP=5, DROP=0.7;
+
+const BIZ=[
+ {id:'b1',name:'מכולת אורן',hood:'קטמון',sector:'מכולת',turnover:1100000,amount:20000,pct:10,purpose:'הקמת אגף מאפים וקירור חדש',desc:'מכולת שכונתית פתוחה 11 שנה, לקוחות קבועים ומשלוחים לבניינים סמוכים.',strengths:'לקוחות קבועים, מיקום ברחוב ראשי',score:8,verified:true,stats:{deals:2,happy:2,months:14,range:'20,000–25,000 ₪'}},
+ {id:'b2',name:'מאפיית הגפן',hood:'נחלאות',sector:'מאפייה',turnover:780000,amount:25000,pct:12,purpose:'החלפת תנור וחידוש ציוד אפייה',desc:'מאפייה משפחתית שמוכרת גם לקייטרינג ולקפה בסביבה.',strengths:'מתכונים ייחודיים, הזמנות קבועות מבתי קפה',score:9,verified:true,stats:{deals:null,happy:null,months:3,range:null}},
+ {id:'b3',name:'קפה הצומת',hood:'בקעה',sector:'בית קפה',turnover:640000,amount:22000,pct:14,purpose:'הרחבת ישיבה בחוץ ומערכת הזמנות',desc:'בית קפה קטן בצומת עמוס, בעיקר בוקר וצהריים.',strengths:'תנועת הולכי רגל גבוהה',score:7,verified:true,stats:{deals:null,happy:null,months:null,range:null}},
+ {id:'b4',name:'מספרת הרחוב',hood:'רחביה',sector:'מספרה',turnover:310000,amount:15000,pct:8,purpose:'כיסאות וציוד חדשים',desc:'מספרה עם שלושה עמדות.',strengths:'תור קבוע',score:6,verified:true,stats:{deals:null,happy:null,months:null,range:null}},
+ {id:'b5',name:'מסעדת הפינה',hood:'מחנה יהודה',sector:'מסעדה',turnover:1800000,amount:60000,pct:9,purpose:'שיפוץ מטבח',desc:'מסעדה ותיקה בשוק.',strengths:'שם מוכר באזור',score:8,verified:true,stats:{deals:1,happy:1,months:20,range:'50,000–60,000 ₪'}},
+ {id:'b6',name:'פרחי השוק',hood:'מחנה יהודה',sector:'חנות',turnover:420000,amount:24000,pct:11,purpose:'מקרר תצוגה ומלאי לחגים',desc:'חנות פרחים עם הזמנות לאירועים.',strengths:'הזמנות מראש לחגים',score:6,verified:true,stats:{deals:null,happy:null,months:2,range:null}},
+ {id:'b7',name:'סטודיו נשימה',hood:'עמק רפאים',sector:'סטודיו',turnover:260000,amount:20000,pct:20,purpose:'שיפוץ אולם ומזרנים',desc:'סטודיו ליוגה ופילאטיס.',strengths:'קהילה קבועה',score:5,verified:true,stats:{deals:null,happy:null,months:null,range:null}},
+ {id:'b8',name:'מכולת הגבעה',hood:'גבעת שאול',sector:'מכולת',turnover:950000,amount:23000,pct:9,purpose:'מדפים חדשים ומערכת קופה',desc:'מכולת שכונתית עם משלוחים.',strengths:'שירות אישי, משלוחים',score:8,verified:true,stats:{deals:1,happy:1,months:9,range:'20,000–25,000 ₪'}},
+ {id:'b9',name:'מאפיית שחר',hood:'בית הכרם',sector:'מאפייה',turnover:690000,amount:25000,pct:15,purpose:'רכישת רכב משלוחים קטן',desc:'מאפייה עם מכירה לחנויות.',strengths:'חוזים עם שלוש חנויות',score:7,verified:true,stats:{deals:null,happy:null,months:5,range:null}},
+ {id:'b10',name:'הפינה הירוקה',hood:'תלפיות',sector:'בית קפה',turnover:380000,amount:21000,pct:13,purpose:'מכונת קפה מקצועית',desc:'בית קפה שכונתי עם אפשרות ישיבה בחצר.',strengths:'חצר שקטה',score:6,verified:true,stats:{deals:null,happy:null,months:null,range:null}},
+ {id:'b11',name:'ספרי הקשת',hood:'האוניברסיטה',sector:'חנות',turnover:210000,amount:20000,pct:7,purpose:'מלאי ספרי לימוד',desc:'חנות ספרים משומשים.',strengths:'סטודנטים, מלאי עשיר',score:5,verified:true,stats:{deals:null,happy:null,months:null,range:null}},
+ {id:'b12',name:'מכבסת הדר',hood:'גילה',sector:'שירותים',turnover:540000,amount:25000,pct:12,purpose:'מכונת כביסה תעשייתית',desc:'מכבסה עם לקוחות מלונות קטנים.',strengths:'חוזה קבוע עם שני מלונות',score:7,verified:true,stats:{deals:null,happy:null,months:7,range:null}}
+];
+const SEED_INV=[
+ {id:'i1',name:'משקיע א׳',hood:'רחביה',strengths:'לקוח קבוע של העסק, ניסיון בקמעונאות',amount:20000,pct:10},
+ {id:'i2',name:'משקיעה ב׳',hood:'בית וגן',strengths:'ניהלה עסק משפחתי 15 שנה',amount:22000,pct:12},
+ {id:'i3',name:'משקיע ג׳',hood:'תלפיות',strengths:'רואה חשבון, מבין בדוחות',amount:25000,pct:9},
+ {id:'i4',name:'משקיעה ד׳',hood:'קריית יובל',strengths:'שכנה, קונה בעסק כל שבוע',amount:20000,pct:15},
+ {id:'i5',name:'משקיע ה׳',hood:'הר נוף',strengths:'משקיע פרטי בעסקים קטנים',amount:24000,pct:11}
+];
+
+function fresh(){return{v:1,role:'biz',tabBiz:'profile',tabInv:'feed',screen:null,seq:1,
+ biz:{onb:0,fname:'',idn:'',reg:'',inv:'',published:false,verified:false,p:{name:'',sector:'מכולת',turnover:'',amount:'',purpose:'',pct:'',desc:'',strengths:''}},
+ inv:{onb:0,fname:'',idn:'',min:'20000',max:'25000',pmin:'8',pmax:'15',sectors:[],strengths:''},
+ swipes:{},deals:[],nf:{amount:'',pct:'',term:''},rf:{pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false}}}
+let S;
+try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
+if(!S||S.v!==1)S=fresh();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=v=>{const n=parseFloat(String(v==null?'':v).replace(/[^\d.\-]/g,''));return isNaN(n)?0:n};
+const fmt=n=>Number(n).toLocaleString('he-IL',{maximumFractionDigits:2})+' ₪';
+const fmtDate=d=>new Date(d).toLocaleDateString('he-IL');
+const deal=id=>S.deals.find(d=>d.id===+id);
+const RL={biz:'בעל העסק',inv:'המשקיע'};
+const other=r=>r==='biz'?'inv':'biz';
+const chip=(t,k='')=>`<span class="chip ${k}">${t}</span>`;
+const stat=(l,v,u='')=>`<div class="stat"><span>${l}</span><b>${v==null?'<i class="nodata">אין נתונים</i>':esc(v)+u}</b></div>`;
+const meter=n=>`<div class="meter" aria-hidden="true">${Array.from({length:10},(_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')}</div>`;
+const field=(label,id,bind,val,o={})=>`<label class="f">${label}${o.req?' <span class="req">*</span>':''}${o.hint?`<span class="hint">${o.hint}</span>`:''}${
+  o.area?`<textarea id="${id}" data-b="${bind}" ${o.dis?'disabled':''}>${esc(val)}</textarea>`
+  :`<input type="text" id="${id}" data-b="${bind}" value="${esc(val)}" ${o.num?'inputmode="decimal"':''} ${o.dis?'disabled':''} ${o.err?'class="err"':''}>`}</label>`;
+
+function bizScore(){
+  const p=S.biz.p,keys=['name','sector','turnover','amount','purpose','pct','desc','strengths'];
+  const fill=keys.filter(k=>String(p[k]).trim()).length/keys.length;
+  return{fill:Math.round(fill*100),score:Math.min(10,1+Math.round(fill*7)+(S.biz.verified?2:0))};
+}
+function meBiz(){const p=S.biz.p;return{id:'me',name:p.name||'העסק שלי',hood:'ירושלים',sector:p.sector,turnover:num(p.turnover),amount:num(p.amount),pct:num(p.pct),purpose:p.purpose,desc:p.desc,strengths:p.strengths,score:bizScore().score,verified:S.biz.verified,stats:{deals:null,happy:null,months:null,range:null},mine:true}}
+function allBiz(){return BIZ.concat(S.biz.published&&S.biz.verified?[meBiz()]:[])}
+function bizById(id){return id==='me'?meBiz():BIZ.find(b=>b.id===id)}
+function invById(id){return id==='meInv'?{id,name:S.inv.fname||'המשקיע שלך (דמו)',hood:'ירושלים',strengths:S.inv.strengths||'—',mine:true}:SEED_INV.find(i=>i.id===id)}
+function myDeals(role){return S.deals.filter(d=>role==='biz'?d.bizId==='me':d.invId==='meInv')}
+function cpName(d,role){return role==='biz'?invById(d.invId).name:bizById(d.bizId).name}
+function newDeal(bizId,invId,amount,pct){
+  const d={id:S.seq++,bizId,invId,status:'interested',matched:false,negot:false,prop:{by:'inv',amount,pct,term:5},terms:null,c:null,
+    log:[{by:'inv',text:`הצעת פתיחה: ${fmt(amount)} תמורת ${pct}% מהרווח החוזי השנתי, ל־5 שנים`}],simYear:0,reports:[]};
+  S.deals.push(d);return d;
+}
+const STATUS={interested:['ממתין לאישור בעל העסק','warn'],negotiating:['משא ומתן','acc'],contract:['חוזה לחתימה','acc'],signed:['נחתם, ממתין להפקדה','warn'],closed:['עסקה פעילה','ok'],rejected:['נדחה','bad'],ended:['נסגר ללא הסכמה','bad']};
+function stBadge(d){const s=STATUS[d.status];return chip(s[0],s[1])}
+
+/* ---------- state mutation ---------- */
+function setIn(o,p,v){const k=p.split('.');while(k.length>1)o=o[k.shift()];o[k[0]]=v}
+function setPath(p,v){
+  if(p.startsWith('d:')){const m=p.match(/^d:(\d+)\.(.+)$/);setIn(deal(m[1]),m[2],v)}else setIn(S,p,v);
+}
+let keepScroll=true;
+function go(patch){Object.assign(S,patch);keepScroll=false;render()}
+function toast(msg){
+  const ph=$('#phone');if(!ph)return;
+  const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;ph.appendChild(t);
+  setTimeout(()=>t.remove(),2600);
+}
+function openDeal(id){
+  const d=deal(id);
+  S.nf=d.prop?{amount:String(d.prop.amount),pct:String(d.prop.pct),term:String(d.prop.term)}:{amount:'',pct:'',term:''};
+  S.rf={pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false};
+  go({screen:{deal:d.id}});
+}
+function approveMatch(d,by){
+  d.status='negotiating';d.matched=true;d.log.push({by,text:'בעל העסק אישר את ההתאמה. נפתח חלון משא ומתן על סכום, אחוז ותקופה'});
+}
+function acceptProp(d,by){
+  d.terms={amount:d.prop.amount,pct:d.prop.pct,term:d.prop.term};d.prop=null;d.negot=true;d.status='contract';
+  d.c={purpose:bizById(d.bizId).purpose||'',freq:'שנתי',closure:'none',closureText:'',sigbiz:false,siginv:false,riskAck:false};
+  d.log.push({by,text:`${RL[by]} אישר את התנאים: ${fmt(d.terms.amount)}, ${d.terms.pct}% מהרווח החוזי, ${d.terms.term} שנים`});
+}
+function afterSign(d){if(d.c.sigbiz&&d.c.siginv){d.status='signed';d.log.push({by:'biz',text:'שני הצדדים חתמו. ההפקדה נפתחה'})}}
+function deposit(d){d.status='closed';d.startAt=Date.now();d.simYear=0;d.log.push({by:'inv',text:'הכסף הופקד דרך ספק התשלומים. העסקה נסגרה'})}
+function fee(a){return Math.round(a*FEE*100)/100}
+
+/* ---------- actions ---------- */
+const ACT={
+ role(r){go({role:r,screen:null})},
+ reset(){S=fresh();save();go({})},
+ tab(t){go(S.role==='biz'?{tabBiz:t,screen:null}:{tabInv:t,screen:null})},
+ back(){go({screen:null})},
+ open(id){openDeal(id)},
+ onbNext(){
+  if(S.role==='biz'){if(S.biz.onb===0){if(!S.biz.fname.trim())return toast('יש להזין שם מלא (שדה דמו)');S.biz.onb=1}else S.biz.onb=2}
+  else{if(!S.inv.fname.trim())return toast('יש להזין שם מלא (שדה דמו)');S.inv.onb=2}
+  go({});
+ },
+ onbDemo(){
+  if(S.role==='biz'){S.biz.fname=S.biz.fname||'בעל עסק לדוגמה';S.biz.idn=S.biz.idn||'000000000'}
+  else{S.inv.fname=S.inv.fname||'משקיע לדוגמה';S.inv.idn=S.inv.idn||'000000000'}
+  go({});
+ },
+ docDemo(k){S.biz[k]=k==='reg'?'רישום_עסק_דמו.pdf':'חשבונית_אחרונה_דמו.pdf';go({})},
+ fillBiz(){S.biz.p={name:'מכולת השכונה',sector:'מכולת',turnover:'900000',amount:'20000',purpose:'הוספת אגף מאפים וקירור',pct:'10',desc:'מכולת שכונתית בירושלים עם לקוחות קבועים ומשלוחים.',strengths:'לקוחות קבועים, מיקום טוב'};
+   S.biz.reg=S.biz.reg||'רישום_עסק_דמו.pdf';S.biz.inv=S.biz.inv||'חשבונית_אחרונה_דמו.pdf';go({})},
+ saveDraft(){save();toast('הטיוטה נשמרה')},
+ publish(){S.biz.published=true;go({});toast('נשלח לאימות הצוות')},
+ verify(){
+  S.biz.verified=true;
+  [0,1,2,3].forEach(i=>{const iv=SEED_INV[i];if(!S.deals.some(d=>d.bizId==='me'&&d.invId===iv.id))newDeal('me',iv.id,iv.amount,iv.pct)});
+  go({});toast('העסק אומת וחשוף למשקיעים');
+ },
+ sector(s){const a=S.inv.sectors,i=a.indexOf(s);i<0?a.push(s):a.splice(i,1);go({})},
+ swipe(dir){swipeTop(dir)},
+ approve(id){const d=deal(id);approveMatch(d,'biz');go({});toast('נוצרה התאמה');openDeal(id)},
+ demoApprove(id){const d=deal(id);approveMatch(d,'biz');go({});toast('בעל העסק אישר את ההתאמה')},
+ reject(id){deal(id).status='rejected';go({});toast('המתעניין נדחה')},
+ propose(){
+  const d=deal(S.screen.deal),n=S.nf,a=num(n.amount),p=num(n.pct),t=num(n.term);
+  if(!(a>0&&p>0&&p<=100&&t>=1&&t<=MAXTERM))return toast('בדקו את הערכים. תקופה עד 10 שנים');
+  d.prop={by:S.role,amount:a,pct:p,term:t};d.negot=true;
+  d.log.push({by:S.role,text:`הצעה: ${fmt(a)}, ${p}% מהרווח החוזי, ${t} שנים`});go({});toast('ההצעה נשלחה');
+ },
+ accept(){const d=deal(S.screen.deal);acceptProp(d,S.role);go({});toast('התנאים אושרו. עוברים לחוזה')},
+ demoAccept(){const d=deal(S.screen.deal);acceptProp(d,other(S.role));go({})},
+ noagree(){const d=deal(S.screen.deal);d.status='ended';d.log.push({by:S.role,text:'לא הושגה הסכמה. הצדדים חוזרים להתאמה'});
+   if(d.invId==='meInv')delete S.swipes[d.bizId];go({screen:null});toast('חזרתם להתאמה')},
+ sign(){const d=deal(S.screen.deal);d.c['sig'+S.role]=true;afterSign(d);go({});toast('החתימה נקלטה')},
+ demoSign(){const d=deal(S.screen.deal),o=other(S.role);d.c['sig'+o]=true;if(o==='inv')d.c.riskAck=true;afterSign(d);go({})},
+ pay(){
+  const d=deal(S.screen.deal),b=$('#payBtn');if(b){b.disabled=true;b.textContent='מעבד תשלום בספק (דמו)…'}
+  setTimeout(()=>{deposit(d);go({});toast('הכסף הופקד. העסקה נסגרה')},800);
+ },
+ demoPay(){deposit(deal(S.screen.deal));go({})},
+ year(){const d=deal(S.screen.deal);if(d.simYear<d.terms.term){d.simYear++;go({});toast(`עברה שנה ${d.simYear} של החוזה`)}},
+ repDemo(){S.rf.file='דוח_רווח_והפסד_דמו.pdf';go({})},
+ report(){
+  const d=deal(S.screen.deal),r=S.rf,pre=num(r.pre),adj=num(r.a)+num(r.b)+num(r.c)+num(r.d),con=pre+adj;
+  d.reports.push({year:d.reports.length+1,pre,a:num(r.a),b:num(r.b),c:num(r.c),d:num(r.d),con,share:Math.max(0,con)*d.terms.pct/100,expl:r.expl,file:r.file,audit:false});
+  S.rf={pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false};go({});toast('הדוח התקבל, ההחזר חושב');
+ },
+ audit(i){const d=deal(S.screen.deal);d.reports[+i].audit=true;go({});toast('בקשת בדיקת רו״ח נשלחה לעסק')}
+};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t||t.disabled)return;const f=ACT[t.dataset.act];if(f){keepScroll=false;f(t.dataset.arg,t)}});
+document.addEventListener('input',e=>{
+  const t=e.target;if(t.dataset&&t.dataset.b){keepScroll=true;setPath(t.dataset.b,t.type==='checkbox'?t.checked:t.value);render()}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;if(t.dataset&&t.dataset.file&&t.files[0]){const n=t.files[0].name;const p=t.dataset.file;
+    if(p==='rf')S.rf.file=n;else S.biz[p]=n;keepScroll=true;render()}
+});
+
+/* ---------- swipe ---------- */
+function feedList(){
+  const v=S.inv,min=num(v.min),max=num(v.max),pmin=num(v.pmin),pmax=num(v.pmax);
+  const all=allBiz().filter(b=>!S.swipes[b.id]);
+  const ok=all.filter(b=>b.amount>=min&&b.amount<=max&&b.pct>=pmin&&b.pct<=pmax&&(!v.sectors.length||v.sectors.includes(b.sector)));
+  return{ok,hidden:all.length-ok.length};
+}
+function swipeTop(dir,card){
+  const list=feedList().ok;if(!list.length)return;
+  const b=list[0],el=card||document.querySelector('.swc');
+  if(el){el.style.transition='transform .22s ease';el.style.transform=`translateX(${dir==='like'?'':'-'}480px) rotate(${dir==='like'?14:-14}deg)`}
+  setTimeout(()=>{
+    S.swipes[b.id]=dir;
+    if(dir==='like'){const d=newDeal(b.id,'meInv',b.amount,b.pct);toast(b.mine?'הבעת עניין בעסק שלך. עברו לתצוגת בעל העסק':`הבעת עניין ב־${b.name}`);void d}
+    keepScroll=false;render();
+  },200);
+}
+function wireSwipe(){
+  const el=document.querySelector('.swc');if(!el)return;
+  let x0=null,dx=0;
+  el.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;x0=e.clientX;dx=0;el.classList.add('drag');el.setPointerCapture(e.pointerId)});
+  el.addEventListener('pointermove',e=>{
+    if(x0==null)return;dx=e.clientX-x0;el.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`;
+    el.querySelector('.tag.l').style.opacity=Math.max(0,Math.min(1,dx/90));el.querySelector('.tag.p').style.opacity=Math.max(0,Math.min(1,-dx/90));
+  });
+  const end=()=>{
+    if(x0==null)return;x0=null;el.classList.remove('drag');
+    if(Math.abs(dx)>90)swipeTop(dx>0?'like':'pass',el);
+    else{el.style.transform='';el.querySelector('.tag.l').style.opacity=0;el.querySelector('.tag.p').style.opacity=0}
+  };
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end);
+}
+
+/* ---------- views ---------- */
+function onboardView(){
+  const isBiz=S.role==='biz',o=isBiz?S.biz:S.inv;
+  if(isBiz&&S.biz.onb===1){
+    return{title:'מסמכי עסק (שלב 2 מתוך 2)',body:`
+      <div class="notice acc">הצוות מאמת ידנית כל עסק לפני שהוא נחשף למשקיעים. אפשר להשלים אחר כך ולשמור טיוטה.</div>
+      ${docRow('מסמך רישום עסק','reg')}${docRow('חשבונית אחרונה','inv')}
+      <button class="btn pri" data-act="onbNext">המשך לפרופיל העסק</button>`};
+  }
+  return{title:`הרשמה וזיהוי${isBiz?' (שלב 1 מתוך 2)':''}`,body:`
+    <div class="notice warn">שדות זיהוי (KYC) הם דמו בלבד. אל תזינו פרטים אמיתיים.</div>
+    ${field('שם מלא','kyc-name',(isBiz?'biz':'inv')+'.fname',o.fname,{req:1})}
+    ${field('מספר זהות (דמו)','kyc-id',(isBiz?'biz':'inv')+'.idn',o.idn,{hint:'אין בדיקת תקינות בדמו',num:1})}
+    <div class="btns"><button class="btn demo" data-act="onbDemo">מלא נתוני דמו</button><button class="btn pri" data-act="onbNext">המשך</button></div>
+    <p class="small muted">ההרשמה חינמית. העמלה (0.8%) נגבית מבעל העסק רק כשעסקה נסגרת.</p>`};
+}
+function docRow(label,k){
+  const v=S.biz[k];
+  return`<div class="card"><div class="row"><b>${label}</b>${v?chip('הועלה','ok'):chip('חסר','warn')}</div>
+   <div class="small muted num">${v?esc(v):'לא נבחר קובץ'}</div>
+   <div class="btns"><label class="btn" style="cursor:pointer">בחירת קובץ<input type="file" data-file="${k}" style="display:none"></label><button class="btn demo" data-act="docDemo" data-arg="${k}">קובץ לדוגמה</button></div></div>`;
+}
+
+function bizProfileView(){
+  const b=S.biz,p=b.p,sc=bizScore();
+  const ready=p.amount&&p.purpose&&p.pct&&b.reg&&b.inv&&p.name;
+  let banner;
+  if(!b.published)banner=`<div class="notice">טיוטה. ממלאים את שדות החובה, מעלים מסמכים ושולחים לאימות.</div>`;
+  else if(!b.verified)banner=`<div class="notice warn">ממתין לאימות הצוות (עד 48 שעות עבודה). רק אחרי אימות העסק נחשף למשקיעים.</div><button class="btn demo" data-act="verify">דמו: הצוות מאשר את העסק</button>`;
+  else banner=`<div class="notice ok">העסק מאומת וחשוף למשקיעים.</div>`;
+  return{title:'פרופיל העסק',body:`${banner}
+   <div class="card"><div class="row"><h3>מדד שלמות פרופיל</h3><div class="score"><b class="num">${sc.score}</b><span class="muted">/10</span></div></div>${meter(sc.score)}
+    <div class="small muted">מילוי ${sc.fill}% · ${b.verified?'מאומת':'לא מאומת'}. המדד מראה כמה הפרופיל מלא ומאומת. הוא לא מעיד על כדאיות ההשקעה ואינו ייעוץ השקעות או דירוג אשראי.</div></div>
+   <div class="card">
+    ${field('שם העסק','p-name','biz.p.name',p.name,{req:1})}
+    <label class="f">תחום<select id="p-sector" data-b="biz.p.sector">${SECTORS.map(s=>`<option ${s===p.sector?'selected':''}>${s}</option>`).join('')}</select></label>
+    ${field('מחזור שנתי משוער (₪)','p-turn','biz.p.turnover',p.turnover,{num:1})}
+    <div class="two">${field('סכום מבוקש (₪)','p-amt','biz.p.amount',p.amount,{req:1,num:1})}${field('אחוז מהרווח שמקובל','p-pct','biz.p.pct',p.pct,{req:1,num:1})}</div>
+    ${field('למה הכסף','p-purpose','biz.p.purpose',p.purpose,{req:1})}
+    ${field('תיאור העסק','p-desc','biz.p.desc',p.desc,{area:1})}
+    ${field('חוזקות','p-str','biz.p.strengths',p.strengths)}
+   </div>
+   ${docRow('מסמך רישום עסק','reg')}${docRow('חשבונית אחרונה','inv')}
+   <div class="btns"><button class="btn demo" data-act="fillBiz">מלא נתוני דוגמה</button><button class="btn" data-act="saveDraft">שמור טיוטה</button>
+   ${b.published?'':`<button class="btn pri" data-act="publish" ${ready?'':'disabled'}>שלח לאימות</button>`}</div>
+   ${!b.published&&!ready?'<p class="tiny muted">לשליחה נדרשים שם, סכום, ייעוד, אחוז ושני מסמכים.</p>':''}`};
+}
+
+function leadsView(){
+  const ls=myDeals('biz').filter(d=>d.status==='interested');
+  if(!S.biz.verified)return{title:'מתעניינים',body:`<div class="notice">אחרי שהעסק יאומת יופיעו כאן משקיעים שהביעו עניין. עברו לטאב הפרופיל ושלחו לאימות.</div>`};
+  return{title:'מתעניינים',body:ls.length?ls.map(d=>{const i=invById(d.invId);return`<div class="card">
+    <div class="row"><b>${esc(i.name)}</b>${chip('KYC אושר','ok')}</div>
+    <div class="small muted">${esc(i.hood)} · ${esc(i.strengths)}</div>
+    <div class="ask"><div>הציע סכום<b>${fmt(d.prop.amount)}</b></div><div>תמורת<b>${d.prop.pct}%</b></div></div>
+    <div class="btns"><button class="btn bad" data-act="reject" data-arg="${d.id}">דחה</button><button class="btn pri" data-act="approve" data-arg="${d.id}">אשר והתחל משא ומתן</button></div></div>`}).join('')
+   :`<div class="notice">אין כרגע מתעניינים חדשים.</div>`+`<p class="small muted">משקיע אחד לעסקה. פיצול הסכום בין כמה משקיעים נדחה לגרסה הבאה.</p>`};
+}
+function dealsListView(role){
+  const ls=myDeals(role).filter(d=>role==='inv'||d.status!=='interested');
+  return{title:role==='biz'?'העסקאות שלי':'ההשקעות והעניין שלי',body:ls.length?ls.map(d=>`
+   <button class="card" style="text-align:start;cursor:pointer" data-act="open" data-arg="${d.id}">
+    <div class="row"><b>${esc(cpName(d,role))}</b>${stBadge(d)}</div>
+    <div class="small muted num">${fmt((d.terms||d.prop||{amount:0}).amount)} · ${(d.terms||d.prop||{pct:0}).pct}% מהרווח החוזי</div></button>`).join('')
+   :`<div class="notice">${role==='inv'?'עדיין אין עסקאות. גללו בפיד והביעו עניין בעסק.':'עדיין אין עסקאות. אשרו מתעניין בטאב המתעניינים.'}</div>`};
+}
+
+function invProfileView(){
+  const v=S.inv;
+  return{title:'פרופיל המשקיע',body:`
+   <div class="card">
+    <div class="two">${field('סכום מינימום (₪)','i-min','inv.min',v.min,{num:1})}${field('סכום מקסימום (₪)','i-max','inv.max',v.max,{num:1})}</div>
+    <div class="two">${field('אחוז מקובל, מינימום','i-pmin','inv.pmin',v.pmin,{num:1})}${field('אחוז מקובל, מקסימום','i-pmax','inv.pmax',v.pmax,{num:1})}</div>
+    <div><div class="small" style="font-weight:600;margin-bottom:6px">תחומים (ריק = הכול)</div><div class="btns" style="gap:6px">${SECTORS.map(s=>`<button class="chip" style="flex:0 0 auto" aria-pressed="${v.sectors.includes(s)}" data-act="sector" data-arg="${s}">${s}</button>`).join('')}</div></div>
+    ${field('החוזקות שלי','i-str','inv.strengths',v.strengths,{hint:'למשל ניסיון בעסקים, ידע חשבונאי'})}
+   </div>
+   <div class="notice acc">הפיד מציג רק עסקים בתוך הסכום והאחוז שהגדרתם. ההשקעה היא בעסק כולו, תמורת אחוז קבוע מהרווח השנתי, בלי בעלות.</div>`};
+}
+
+function feedView(){
+  const{ok,hidden}=feedList(),v=S.inv;
+  const head=`<div class="row small muted"><span>טווח: ${fmt(num(v.min))}–${fmt(num(v.max))} · ${v.pmin}–${v.pmax}%</span><span>${hidden?`${hidden} עסקים מחוץ לטווח`:''}</span></div>`;
+  if(!ok.length)return{title:'גילוי עסקים',body:`${head}<div class="notice">אין עוד עסקים שמתאימים לטווחים שלכם. אפשר להרחיב את הטווח בפרופיל.</div>`};
+  const b=ok[0];
+  return{title:'גילוי עסקים',body:`${head}
+  <div class="deck"><div class="swc" role="group" aria-label="כרטיס עסק">
+    <span class="tag l">מעוניין</span><span class="tag p">דלג</span>
+    <div class="row"><div style="display:flex;gap:10px;align-items:center;min-width:0"><div class="avatar" aria-hidden="true">${esc(b.name[0])}</div><div style="min-width:0"><h2>${esc(b.name)}</h2><div class="small muted">${esc(b.sector)} · ${esc(b.hood)}</div></div></div>
+      <div style="text-align:center"><div class="score"><b class="num">${b.score}</b><span class="muted">/10</span></div><div class="tiny muted">שלמות פרופיל</div></div></div>
+    ${meter(b.score)}
+    <div class="ask"><div>מבקש<b>${fmt(b.amount)}</b></div><div>מציע מהרווח החוזי<b>${b.pct}% </b></div></div>
+    <div class="small"><b>ייעוד:</b> ${esc(b.purpose||'פתוח')}</div>
+    <div class="small muted">${esc(b.desc)}</div>
+    <div class="small"><b>חוזקות:</b> ${esc(b.strengths)}</div>
+    <div class="tiny muted" style="margin-top:2px">מידע שהעסק בחר להציג על עצמו. מחזור שנתי משוער: ${b.turnover?fmt(b.turnover):'לא צוין'}</div>
+    <div class="stats">${stat('עסקאות מוצלחות',b.stats.deals)}${stat('משקיעים מרוצים',b.stats.happy)}${stat('זמן באפליקציה',b.stats.months,' חודשים')}${stat('טווחי השקעה',b.stats.range)}</div>
+    <div class="tiny muted">המדד אינו ייעוץ השקעות ואינו דירוג אשראי. השקעה בעסק עלולה לאבד את כולה.</div>
+  </div></div>
+  <div class="deckbtns"><button class="round no" aria-label="דלג" data-act="swipe" data-arg="pass">✕</button><button class="round yes" aria-label="מעוניין" data-act="swipe" data-arg="like">✓</button></div>
+  <p class="tiny muted" style="text-align:center">אפשר גם לגרור את הכרטיס ימינה (מעוניין) או שמאלה (דלג)</p>`};
+}
+
+/* ----- deal screen ----- */
+function dealView(d){
+  const role=S.role,idx={interested:0,negotiating:1,contract:2,signed:3,closed:4}[d.status];
+  const labels=['התאמה','משא ומתן','חוזה','הפקדה','פעילה'];
+  const steps=idx==null?'':`<div class="steps">${labels.map((l,i)=>`<div class="${i<=idx?'done':''}">${l}</div>`).join('')}</div>`;
+  const head=`<div class="row"><button class="btn link" data-act="back">‹ חזרה</button>${stBadge(d)}</div>
+    <div><h2>${esc(cpName(d,role))}</h2><div class="small muted">${role==='biz'?'משקיע':'עסק'} · עסקה #${d.id}</div></div>${steps}`;
+  let body='';
+  if(d.status==='interested')body=interestedBody(d,role);
+  else if(d.status==='negotiating')body=negBody(d,role);
+  else if(d.status==='contract')body=contractBody(d,role);
+  else if(d.status==='signed')body=payBody(d,role);
+  else if(d.status==='closed')body=closedBody(d,role);
+  else body=`<div class="notice bad">${d.status==='rejected'?'בעל העסק דחה את ההתאמה.':'לא הושגה הסכמה בחלון המשא ומתן והצדדים חזרו להתאמה.'}</div>`;
+  const log=d.log.length?`<details><summary class="small">יומן העסקה (${d.log.length})</summary><div class="stack" style="margin-top:8px">${d.log.map(l=>`<div class="bubble ${l.by}"><small>${RL[l.by]}</small>${esc(l.text)}</div>`).join('')}</div></details>`:'';
+  return{title:'עסקה',body:head+body+log};
+}
+function interestedBody(d,role){
+  const p=d.prop;
+  return`<div class="card"><h3>הצעת פתיחה של המשקיע</h3><div class="ask"><div>סכום<b>${fmt(p.amount)}</b></div><div>אחוז מהרווח החוזי<b>${p.pct}%</b></div></div></div>
+   ${role==='biz'?`<div class="btns"><button class="btn bad" data-act="reject" data-arg="${d.id}">דחה</button><button class="btn pri" data-act="approve" data-arg="${d.id}">אשר התאמה</button></div>`
+   :`<div class="notice warn">ההתאמה מתממשת כשבעל העסק מאשר. המשקיע אינו משלם עד חתימה והפקדה.</div><button class="btn demo" data-act="demoApprove" data-arg="${d.id}">דמו: בעל העסק מאשר</button>`}`;
+}
+function negBody(d,role){
+  const p=d.prop,n=S.nf,termErr=n.term!==''&&(num(n.term)>MAXTERM||num(n.term)<1);
+  const mine=p&&p.by===role;
+  return`<div class="card"><h3>ההצעה הנוכחית (${p?`מ${RL[p.by]}`:''})</h3>
+    <div class="stats"><div class="stat"><span>סכום</span><b class="num">${fmt(p.amount)}</b></div><div class="stat"><span>אחוז מהרווח</span><b class="num">${p.pct}%</b></div><div class="stat"><span>תקופה</span><b class="num">${p.term} שנים</b></div><div class="stat"><span>תקרת הפלטפורמה</span><b>${MAXTERM} שנים</b></div></div>
+    ${mine?`<div class="notice">ממתין לתשובת הצד השני.</div><button class="btn demo" data-act="demoAccept">דמו: ${RL[other(role)]} מאשר את התנאים</button>`
+         :`<button class="btn pri" data-act="accept">אשר את התנאים</button>`}</div>
+   <div class="card"><h3>הצעה נגדית</h3>
+    <div class="two">${field('סכום (₪)','n-amt','nf.amount',n.amount,{num:1})}${field('אחוז מהרווח','n-pct','nf.pct',n.pct,{num:1})}</div>
+    ${field('תקופה (שנים)','n-term','nf.term',n.term,{num:1,err:termErr,hint:`עד ${MAXTERM} שנים`})}
+    ${termErr?`<div class="notice bad">התקופה חייבת להיות בין שנה ל־${MAXTERM} שנים.</div>`:''}
+    <button class="btn pri" data-act="propose" ${termErr?'disabled':''}>שלח הצעה</button></div>
+   <button class="btn bad" data-act="noagree">אין הסכמה, חזרה להתאמה</button>`;
+}
+function contractBody(d,role){
+  const c=d.c,t=d.terms,locked=c.sigbiz||c.siginv,miss=[];
+  if(!(t.term>=1&&t.term<=MAXTERM))miss.push('תקופה (עד 10 שנים)');
+  if(!c.purpose.trim())miss.push('ייעוד הכסף');
+  if(c.closure==='agreed'&&!c.closureText.trim())miss.push('הסדר פיצוי בסגירת העסק');
+  const needRisk=role==='inv'&&!c.riskAck;
+  const canSign=!miss.length&&!needRisk&&!c['sig'+role];
+  const termStr=String(t.term);
+  return`<div class="card"><h3>חוזה אחיד: שדות חובה</h3><div class="scroll-x"><table>
+   <tr><th>שדה</th><th>ערך</th></tr>
+   <tr><td>סכום ההשקעה</td><td class="num"><b>${fmt(t.amount)}</b></td></tr>
+   <tr><td>אחוז מהרווח השנתי</td><td class="num"><b>${t.pct}%</b></td></tr>
+   <tr><td>תקופה (עד ${MAXTERM} שנים)</td><td><input type="text" id="c-term" inputmode="numeric" data-b="d:${d.id}.terms.term" value="${esc(termStr)}" ${locked?'disabled':''} class="${miss.includes('תקופה (עד 10 שנים)')?'err':''}" style="width:90px"></td></tr>
+   <tr><td>ייעוד הכסף</td><td><input type="text" id="c-purpose" data-b="d:${d.id}.c.purpose" value="${esc(c.purpose)}" ${locked?'disabled':''} class="${c.purpose.trim()?'':'err'}"></td></tr>
+   <tr><td>תדירות דיווח</td><td><select id="c-freq" data-b="d:${d.id}.c.freq" ${locked?'disabled':''}>${['שנתי','חצי שנתי','רבעוני'].map(f=>`<option ${f===c.freq?'selected':''}>${f}</option>`).join('')}</select><div class="tiny muted">ברירת מחדל שנתי. דוחות ביניים נועדו למידע, הרווח החוזי נקבע לפי הדוח השנתי.</div></td></tr>
+   <tr><td>מדידת הרווח</td><td class="small">רווח חוזי: רווח לפני מס לפי הדוח שהוגש לרשות המסים ואושר על ידי רו״ח או יועץ מס, בתוספת שכר בעלים מעל המוסכם, הוצאות פרטיות, תשלומים לצדדים קשורים מעל מחיר שוק והחזרי הלוואות בעלים. (חלק קבוע בתבנית)</td></tr>
+   <tr><td>זכות ביקורת</td><td class="small">המשקיע רשאי לדרוש בדיקת רו״ח מטעמו. פער מעל ${AUDIT_GAP}% מחייב את העסק בעלות הבדיקה. (חלק קבוע בתבנית)</td></tr>
+   <tr><td>סגירה או הפסד של העסק</td><td><select id="c-clo" data-b="d:${d.id}.c.closure" ${locked?'disabled':''}><option value="none" ${c.closure==='none'?'selected':''}>אין פיצוי למשקיע</option><option value="agreed" ${c.closure==='agreed'?'selected':''}>הסדר אחר שהוסכם</option></select>
+     ${c.closure==='agreed'?`<input type="text" id="c-clot" data-b="d:${d.id}.c.closureText" value="${esc(c.closureText)}" placeholder="פרטו את ההסדר" ${locked?'disabled':''} style="margin-top:6px">`:''}</td></tr>
+  </table></div>
+  ${miss.length?`<div class="notice bad">אי אפשר לחתום. שדות חובה חסרים או לא תקינים: ${miss.join(', ')}.</div>`:''}</div>
+  ${role==='inv'?`<div class="notice bad"><label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input type="checkbox" id="c-risk" data-b="d:${d.id}.c.riskAck" ${c.riskAck?'checked':''} style="margin-top:4px;width:18px;height:18px;flex:none">
+    <span><b>אתה עלול לאבד את כל ההשקעה.</b><br>חלוקה ברווחים היא חלוקה בסיכונים. ההחזר הראשון יגיע לכל המוקדם אחרי הדוח השנתי הראשון, ואין אפשרות יציאה. אני מאשר/ת שקראתי והבנתי.</span></label></div>`:''}
+  <div class="card"><h3>חתימות</h3>
+   <div class="sig"><span>בעל העסק</span>${c.sigbiz?chip('חתם','ok'):chip('ממתין','warn')}</div>
+   <div class="sig"><span>המשקיע</span>${c.siginv?chip('חתם','ok'):chip('ממתין','warn')}</div>
+   <button class="btn pri" data-act="sign" ${canSign?'':'disabled'}>${c['sig'+role]?'חתמת על החוזה':`חתום כ${RL[role]}`}</button>
+   ${needRisk&&!miss.length?'<p class="tiny muted">יש לאשר את אזהרת הסיכון כדי לחתום.</p>':''}
+   ${c['sig'+other(role)]?'':`<button class="btn demo" data-act="demoSign">דמו: ${RL[other(role)]} חותם</button>`}</div>`;
+}
+function payBody(d,role){
+  const t=d.terms,f=fee(t.amount);
+  return`<div class="notice warn">סביבת בדיקות. אין כסף אמיתי. בהפעלה אמיתית ההעברה תעבור דרך ספק תשלומים או נאמנות מורשה, אחרי בדיקה משפטית.</div>
+  <div class="card"><h3>הפקדה והעברה</h3>
+   <table><tr><td>סכום ההשקעה</td><td class="num"><b>${fmt(t.amount)}</b></td></tr>
+   <tr><td>עמלת פלטפורמה 0.8% (משולמת על ידי בעל העסק)</td><td class="num"><b>${fmt(f)}</b></td></tr>
+   <tr><td>הסכום נטו שמגיע לעסק</td><td class="num"><b>${fmt(t.amount-f)}</b></td></tr></table>
+   <p class="tiny muted">הכסף עובר רק אחרי חתימה של שני הצדדים. העסקה נחשבת סגורה כשהחוזה חתום והכסף הופקד.</p>
+   ${role==='inv'?`<button class="btn pri" id="payBtn" data-act="pay">הפקד ${fmt(t.amount)} דרך ספק התשלומים (דמו)</button>`
+   :`<div class="notice">ממתין להפקדת המשקיע.</div><button class="btn demo" data-act="demoPay">דמו: המשקיע מפקיד</button>`}</div>`;
+}
+function dueDate(d,n){const x=new Date(d.startAt);x.setFullYear(x.getFullYear()+n);x.setDate(x.getDate()+90);return x}
+function closedBody(d,role){
+  const t=d.terms,f=fee(t.amount),n=d.reports.length+1,due=n<=t.term&&d.simYear>=n;
+  const sched=Array.from({length:t.term},(_,i)=>{const y=i+1,r=d.reports[i];
+    return`<tr><td>שנה ${y}</td><td class="num">${fmtDate(dueDate(d,y))}</td><td>${r?`${chip('שולם','ok')}<div class="num small">${fmt(r.share)}</div>`:(y===n&&due?chip('הדוח מחכה','warn'):chip('ממתין לדוח'))}</td></tr>`}).join('');
+  const reps=d.reports.map((r,i)=>`<div class="card flat"><div class="row"><b>דוח שנה ${r.year}</b>${r.audit?chip('נשלחה בקשת בדיקה','warn'):''}</div>
+    <div class="small num">רווח חוזי: ${fmt(r.con)} · חלק המשקיע (${t.pct}%): <b>${fmt(r.share)}</b></div>
+    ${r.expl?`<div class="tiny muted">הסבר העסק לירידה ברווח: ${esc(r.expl)}</div>`:''}
+    ${role==='inv'&&!r.audit?`<button class="btn" data-act="audit" data-arg="${i}">בקש בדיקת רו״ח מטעמי</button>`:''}</div>`).join('');
+  return`<div class="notice ok">העסקה נסגרה: החוזה נחתם והכסף הופקד.</div>
+  <div class="card"><h3>${role==='inv'?'סטטוס ההשקעה':'סטטוס העסקה'}</h3>
+   <div class="stats"><div class="stat"><span>הופקד</span><b class="num">${fmt(t.amount)}</b></div><div class="stat"><span>${role==='biz'?'נטו אחרי עמלה':'עמלה (משולמת מהעסק)'}</span><b class="num">${fmt(role==='biz'?t.amount-f:f)}</b></div>
+   <div class="stat"><span>אחוז מהרווח החוזי</span><b class="num">${t.pct}%</b></div><div class="stat"><span>תקופה · דיווח</span><b>${t.term} שנים · ${esc(d.c.freq)}</b></div></div>
+   <div class="notice acc">החזר ראשון צפוי לכל המוקדם: <b>${fmtDate(dueDate(d,1))}</b>, אחרי הדוח השנתי הראשון.${role==='inv'?' עד אז אין נתונים על העסק, אלא אם הצדדים הסכימו על דוחות ביניים.':''}</div></div>
+  <div class="card"><h3>לוח החזרים</h3><div class="scroll-x"><table><tr><th>שנה</th><th>מועד הגשה</th><th>סטטוס</th></tr>${sched}</table></div></div>
+  ${reps}
+  ${role==='biz'?reportForm(d,n,due):''}
+  <button class="btn demo" data-act="year" ${d.simYear>=t.term?'disabled':''}>דמו: קדם שנה בחוזה (עכשיו שנה ${d.simYear})</button>
+  <p class="tiny muted">העסק לא משלם? בגרסה הראשונה צוות הפלטפורמה מטפל בכך ידנית. סוכן AI לסכסוכים ייבנה בשלב מאוחר יותר.</p>`;
+}
+function reportForm(d,n,due){
+  if(n>d.terms.term)return`<div class="notice">כל הדוחות הוגשו.</div>`;
+  if(!due)return`<div class="notice">הדוח השנתי הראשון יוגש אחרי תום שנה. תקבלו תזכורת לפני המועד.</div>`;
+  const r=S.rf,con=num(r.pre)+num(r.a)+num(r.b)+num(r.c)+num(r.d),share=Math.max(0,con)*d.terms.pct/100;
+  const prev=d.reports.length?d.reports[d.reports.length-1].con:null,drop=prev!=null&&prev>0&&con<prev*DROP;
+  const ok=r.pre!==''&&r.file&&r.ack&&(!drop||r.expl.trim());
+  return`<div class="card"><div class="row"><h3>דוח שנתי: שנה ${n}</h3>${chip('תזכורת: עד '+fmtDate(dueDate(d,n)),'warn')}</div>
+   <div class="row small"><span>${r.file?esc(r.file):'לא הועלה דוח רווח והפסד מאושר'}</span></div>
+   <div class="btns"><label class="btn" style="cursor:pointer">העלאת דוח<input type="file" data-file="rf" style="display:none"></label><button class="btn demo" data-act="repDemo">קובץ לדוגמה</button></div>
+   ${field('רווח לפני מס לפי הדוח (₪)','r-pre','rf.pre',r.pre,{num:1,req:1})}
+   <div class="small muted" style="font-weight:600">התאמות לרווח החוזי</div>
+   ${field('(א) שכר בעלים מעל המוסכם','r-a','rf.a',r.a,{num:1})}${field('(ב) הוצאות פרטיות','r-b','rf.b',r.b,{num:1})}
+   ${field('(ג) תשלומים לצדדים קשורים מעל מחיר שוק','r-c','rf.c',r.c,{num:1})}${field('(ד) החזרי הלוואות בעלים','r-d','rf.d',r.d,{num:1})}
+   <div class="notice acc num">רווח חוזי: <b>${fmt(con)}</b><br>חלק המשקיע (${d.terms.pct}%): <b>${fmt(share)}</b></div>
+   ${drop?`<div class="notice warn">הרווח ירד בחדות לעומת שנה קודמת. נדרש הסבר כתוב לפני תשלום ההחזר.</div>${field('הסבר לירידה ברווח','r-expl','rf.expl',r.expl,{area:1,req:1})}`:''}
+   <label style="display:flex;gap:8px;align-items:flex-start;font-size:13px"><input type="checkbox" id="r-ack" data-b="rf.ack" ${r.ack?'checked':''} style="margin-top:3px"><span>הנתון זהה לנתון שהוגש לרשות המסים.</span></label>
+   <button class="btn pri" data-act="report" ${ok?'':'disabled'}>הגש דוח וחשב החזר</button></div>`;
+}
+
+/* ---------- shell ---------- */
+function currentView(){
+  const role=S.role,isBiz=role==='biz';
+  if(isBiz&&S.biz.onb<2)return{v:onboardView(),tabs:false};
+  if(!isBiz&&S.inv.onb<2)return{v:onboardView(),tabs:false};
+  if(S.screen){const d=deal(S.screen.deal);if(d)return{v:dealView(d),tabs:true}}
+  const t=isBiz?S.tabBiz:S.tabInv;
+  let v;
+  if(isBiz)v=t==='profile'?bizProfileView():t==='leads'?leadsView():dealsListView('biz');
+  else v=t==='feed'?feedView():t==='mine'?dealsListView('inv'):invProfileView();
+  return{v,tabs:true};
+}
+function tabsHtml(){
+  const isBiz=S.role==='biz',cur=isBiz?S.tabBiz:S.tabInv;
+  const cnt=isBiz?myDeals('biz').filter(d=>d.status==='interested').length:0;
+  const list=isBiz?[['profile','פרופיל'],['leads','מתעניינים'+(cnt?`<span class="badge">${cnt}</span>`:'')],['deals','עסקאות']]:[['feed','גילוי'],['mine','העסקאות שלי'],['profile','פרופיל']];
+  return`<nav class="tabs" aria-label="ניווט ראשי">${list.map(([k,l])=>`<button data-act="tab" data-arg="${k}" ${!S.screen&&cur===k?'aria-current="page"':''}>${l}</button>`).join('')}</nav>`;
+}
+function funnel(){
+  const swipes=Object.keys(S.swipes).length+S.deals.filter(d=>d.invId!=='meInv').length;
+  const match=S.deals.filter(d=>d.matched).length,neg=S.deals.filter(d=>d.negot).length,signed=S.deals.filter(d=>d.status==='signed'||d.status==='closed').length,dep=S.deals.filter(d=>d.status==='closed').length;
+  const rows=[['החלקה',swipes],['התאמה',match],['משא ומתן',neg],['חוזה חתום',signed],['עסקה (הופקד)',dep]],mx=Math.max(1,swipes);
+  const pct=(a,b)=>b?Math.round(a/b*100)+'%':'אין נתונים';
+  return`<div class="card"><h3>מסלול העסקה (נתוני הדמו)</h3><div class="funnel">${rows.map(([l,n])=>`<div class="fbar"><span>${l}</span><span class="t"><i style="width:${n/mx*100}%"></i></span><b>${n}</b></div>`).join('')}</div>
+   <div class="scroll-x"><table><tr><th>מדד</th><th>בדמו</th><th>יעד ראשוני</th></tr>
+   <tr><td>התאמה שהופכת למשא ומתן</td><td class="num">${pct(neg,match)}</td><td>50%</td></tr>
+   <tr><td>התאמה שהופכת לעסקה</td><td class="num">${pct(dep,match)}</td><td>5%–10% ב־3 חודשים</td></tr>
+   <tr><td>זמן מהתאמה לחתימה</td><td>—</td><td>עד 14 ימים</td></tr>
+   <tr><td>דוחות שנתיים בזמן</td><td>—</td><td>90%</td></tr></table></div>
+   <p class="tiny muted">היעדים הם השערות עבודה לכיול אחרי שלב האימות.</p></div>`;
+}
+function sidePanel(){
+  return funnel()+`
+  <div class="card"><h3>המודל בקצרה</h3><ul class="clean small">
+   <li>המשקיע נותן סכום קבוע (כ־20,000–25,000 ₪) ומקבל אחוז קבוע מהרווח החוזי השנתי של העסק כולו, עד 10 שנים, בלי בעלות.</li>
+   <li>עמלה של 0.8% מסכום ההשקעה, משולמת על ידי בעל העסק (20,000 ₪ ← 160 ₪).</li>
+   <li>הכסף עובר רק אחרי חתימת שני הצדדים. ההחזר הראשון רק אחרי הדוח השנתי הראשון.</li>
+   <li>ללא פיצוי כברירת מחדל. אזהרת סיכון מפורשת לפני חתימה.</li></ul></div>
+  <details class="card"><summary>מה מחוץ לגרסה הראשונה</summary><ul class="clean small">
+   <li>סוכן AI לסכסוכים (כרגע טיפול ידני של הצוות)</li><li>ערבות בנקאית מבעל העסק (גרסה הבאה)</li>
+   <li>אימות מתקדם: רשות המסים, רשם החברות, קופה</li><li>פיצול סכום בין כמה משקיעים</li><li>שוק משני, דירוגים וביקורות, חוזים מותאמים</li></ul></details>
+  <div class="notice warn small">דורש בדיקה משפטית לפני כסף אמיתי: רישוי, הלבנת הון, ניכוי מס, אישור תבנית החוזה והגדרת הרווח החוזי.</div>`;
+}
+function render(){
+  const ph=$('#phone'),scr=ph.querySelector('.screen'),top=scr&&keepScroll?scr.scrollTop:0;
+  const a=document.activeElement,fid=a&&a.id&&ph.contains(a)?a.id:null;
+  let ss=null,se=null;if(fid&&a.setSelectionRange){try{ss=a.selectionStart;se=a.selectionEnd}catch(e){}}
+  const{v,tabs}=currentView();
+  ph.innerHTML=`<div class="ph-head"><h2>${v.title}</h2>${chip(S.role==='biz'?'בעל עסק':'משקיע','acc')}</div><div class="demo-banner">גרסת דמו · נתוני דוגמה · ללא כסף אמיתי</div>
+    <main class="screen">${v.body}</main>${tabs?tabsHtml():''}`;
+  const ns=ph.querySelector('.screen');if(ns)ns.scrollTop=top;
+  if(fid){const el=document.getElementById(fid);if(el){el.focus({preventScroll:true});if(ss!=null&&el.setSelectionRange){try{el.setSelectionRange(ss,se)}catch(e){}}}}
+  $('#side').innerHTML=sidePanel();
+  $('#roleBiz').setAttribute('aria-pressed',S.role==='biz');$('#roleInv').setAttribute('aria-pressed',S.role==='inv');
+  keepScroll=true;save();wireSwipe();
+}
+render();
+</script>
