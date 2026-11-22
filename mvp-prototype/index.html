@@ -72,27 +72,6 @@ input[type=text],select,textarea{width:100%;border:1px solid var(--line);backgro
 textarea{resize:vertical;min-height:64px}
 input.err{border-color:var(--bad)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.amt{display:flex;flex-direction:column;gap:6px;min-width:0}
-.amt .amt-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;font-weight:600}
-.amt .amt-v{color:var(--accent);font-variant-numeric:tabular-nums}
-.dual{position:relative;height:36px;margin:0 11px}
-.dual .track,.dual .fill{position:absolute;top:50%;height:6px;margin-top:-3px;border-radius:3px}
-.dual .track{inset-inline:0;background:var(--line)}
-.dual .fill{background:var(--accent)}
-.dual input[type=range]{position:absolute;inset-inline:-11px;top:0;width:calc(100% + 22px);height:36px;margin:0;background:none;-webkit-appearance:none;appearance:none;pointer-events:none}
-.dual input[type=range]::-webkit-slider-runnable-track{background:none;border:0}
-.dual input[type=range]::-moz-range-track{background:none;border:0}
-.dual input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:grab}
-.dual input[type=range]::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:grab}
-.dual input[type=range]:focus-visible{outline:none}
-.dual input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--accent);outline-offset:2px}
-.dual input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--accent);outline-offset:2px}
-.amt .amt-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
-details.amtbar{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
-details.amtbar summary{display:flex;justify-content:space-between;gap:8px;cursor:pointer;font-size:12.5px;color:var(--muted);list-style:none}
-details.amtbar summary::-webkit-details-marker{display:none}
-details.amtbar summary .edit{color:var(--accent);font-weight:600;white-space:nowrap}
-details.amtbar[open] summary{margin-bottom:8px}
 .req{color:var(--bad)}
 .chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:var(--surface2);color:var(--muted);white-space:nowrap}
 .chip.ok{background:var(--good-soft);color:var(--good)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
@@ -143,35 +122,7 @@ ul.clean{margin:6px 0 0;padding-inline-start:18px;display:flex;flex-direction:co
 .sig{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:var(--surface2)}
 .big{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
 .num{font-variant-numeric:tabular-nums}
-#rain{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50}
-/* "It's a Match!" overlay, shown over the phone once per deal when the business owner approves a match */
-.match{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;
-  background:radial-gradient(circle at 50% 38%,rgba(12,106,88,.55),rgba(6,18,15,.9) 70%);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;overflow:hidden;animation:mFade .25s ease both}
-.m-confs{position:absolute;inset:0;pointer-events:none}
-.m-conf{position:absolute;top:-16px;left:var(--x);width:8px;height:14px;border-radius:2px;background:var(--c);opacity:0;animation:mConfetti var(--d) cubic-bezier(.25,.6,.45,1) var(--w) both}
-.m-pair{display:flex;align-items:center;position:relative}
-.m-av{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-size:36px;font-weight:800;border:4px solid #fff;box-shadow:0 8px 24px rgba(0,0,0,.35)}
-.m-av.biz{background:var(--accent);color:var(--accent-ink);animation:mSlideR .55s cubic-bezier(.2,1.3,.4,1) .1s both}
-.m-av.inv{background:#fff;color:#0C6A58;animation:mSlideL .55s cubic-bezier(.2,1.3,.4,1) .1s both}
-.m-heart{position:relative;z-index:1;width:46px;height:46px;margin-inline:-14px;border-radius:50%;display:grid;place-items:center;background:var(--good);color:#fff;font-size:22px;font-weight:800;border:3px solid #fff;box-shadow:0 0 0 0 rgba(111,213,152,.6);animation:mIn .3s ease .55s both,mPulse 1.4s ease-out .85s 2}
-.m-title{font-size:46px;line-height:1.05;font-weight:800;letter-spacing:-.5px;text-wrap:balance;
-  background:linear-gradient(110deg,#fff 42%,#9FE8D2 50%,#fff 58%);background-size:260% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 4px 18px rgba(63,192,164,.55));animation:mPop .6s cubic-bezier(.2,1.6,.4,1) .3s both,mShine 1.3s ease .95s both}
-.m-sub b{white-space:nowrap;color:#fff}
-.m-sub{max-width:300px;font-size:15px;color:rgba(255,255,255,.88);animation:mIn .4s ease .75s both}
-.m-btns{display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px;margin-top:4px;animation:mIn .4s ease .9s both}
-.m-btns .btn{width:100%}
-.match .btn.m-later{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
-.match .btn:focus-visible{outline-color:#fff}
-@keyframes mFade{from{opacity:0}}
-@keyframes mIn{from{opacity:0;transform:translateY(10px) scale(.9)}}
-@keyframes mPop{0%{opacity:0;transform:scale(.4) rotate(-6deg)}100%{opacity:1;transform:none}}
-@keyframes mShine{from{background-position:100% 0}to{background-position:0 0}}
-@keyframes mSlideR{from{opacity:0;transform:translateX(140px) rotate(20deg)}}
-@keyframes mSlideL{from{opacity:0;transform:translateX(-140px) rotate(-20deg)}}
-@keyframes mPulse{0%{box-shadow:0 0 0 0 rgba(111,213,152,.65);transform:scale(1)}30%{transform:scale(1.15)}100%{box-shadow:0 0 0 22px rgba(111,213,152,0);transform:scale(1)}}
-@keyframes mConfetti{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:.9;transform:translate(var(--dx),860px) rotate(var(--r))}}
-@media (prefers-reduced-motion:reduce){.swc{transition:none}.match,.match *{animation:none!important}.m-conf{display:none}.m-title{background-position:0 0}}
+@media (prefers-reduced-motion:reduce){.swc{transition:none}}
 </style>
 
 <div class="wrap">
@@ -199,7 +150,6 @@ ul.clean{margin:6px 0 0;padding-inline-start:18px;display:flex;flex-direction:co
 const KEY='mvp-demo-v1';
 const SECTORS=['מכולת','מאפייה','בית קפה','מספרה','מסעדה','חנות','סטודיו','שירותים'];
 const FEE=0.008, MAXTERM=10, AUDIT_GAP=5, DROP=0.7;
-const AMT_MIN=5000, AMT_MAX=100000, AMT_STEP=1000; /* investor amount range slider */
 
 const BIZ=[
  {id:'b1',name:'מכולת אורן',hood:'קטמון',sector:'מכולת',turnover:1100000,amount:20000,pct:10,purpose:'הקמת אגף מאפים וקירור חדש',desc:'מכולת שכונתית פתוחה 11 שנה, לקוחות קבועים ומשלוחים לבניינים סמוכים.',strengths:'לקוחות קבועים, מיקום ברחוב ראשי',score:8,verified:true,stats:{deals:2,happy:2,months:14,range:'20,000–25,000 ₪'}},
@@ -226,11 +176,10 @@ const SEED_INV=[
 function fresh(){return{v:1,role:'biz',tabBiz:'profile',tabInv:'feed',screen:null,seq:1,
  biz:{onb:0,fname:'',idn:'',reg:'',inv:'',published:false,verified:false,p:{name:'',sector:'מכולת',turnover:'',amount:'',purpose:'',pct:'',desc:'',strengths:''}},
  inv:{onb:0,fname:'',idn:'',min:'20000',max:'25000',pmin:'8',pmax:'15',sectors:[],strengths:''},
- ui:{amtOpen:false},swipes:{},deals:[],nf:{amount:'',pct:'',term:''},rf:{pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false}}}
+ swipes:{},deals:[],nf:{amount:'',pct:'',term:''},rf:{pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false}}}
 let S;
 try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
 if(!S||S.v!==1)S=fresh();
-S.ui=S.ui||{amtOpen:false};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* ---------- helpers ---------- */
@@ -248,30 +197,6 @@ const meter=n=>`<div class="meter" aria-hidden="true">${Array.from({length:10},(
 const field=(label,id,bind,val,o={})=>`<label class="f">${label}${o.req?' <span class="req">*</span>':''}${o.hint?`<span class="hint">${o.hint}</span>`:''}${
   o.area?`<textarea id="${id}" data-b="${bind}" ${o.dis?'disabled':''}>${esc(val)}</textarea>`
   :`<input type="text" id="${id}" data-b="${bind}" value="${esc(val)}" ${o.num?'inputmode="decimal"':''} ${o.dis?'disabled':''} ${o.err?'class="err"':''}>`}</label>`;
-/* Two-handle range slider for the investor's amount range. Bound to inv.min / inv.max. */
-const clampAmt=n=>Math.min(AMT_MAX,Math.max(AMT_MIN,Math.round(n/AMT_STEP)*AMT_STEP));
-const amtPos=n=>(clampAmt(n)-AMT_MIN)/(AMT_MAX-AMT_MIN)*100;
-function amountSlider(id){
-  const lo=clampAmt(num(S.inv.min)),hi=clampAmt(num(S.inv.max));
-  const rng=(suf,bind,val,lab)=>`<input type="range" id="${id}-${suf}" data-b="${bind}" data-amt="${id}" min="${AMT_MIN}" max="${AMT_MAX}" step="${AMT_STEP}" value="${val}" aria-label="${lab}" aria-valuetext="${fmt(val)}">`;
-  return`<div class="amt" data-amtbox="${id}">
-   <div class="amt-h"><span>סכום שאני מוכן/ה להשקיע</span><span class="amt-v" aria-live="polite">${fmt(lo)} – ${fmt(hi)}</span></div>
-   <div class="dual"><span class="track"></span><span class="fill" style="inset-inline-start:${amtPos(lo)}%;inset-inline-end:${100-amtPos(hi)}%"></span>
-    ${rng('lo','inv.min',lo,'סכום מינימום')}${rng('hi','inv.max',hi,'סכום מקסימום')}</div>
-   <div class="amt-scale"><span>${fmt(AMT_MIN)}</span><span>${fmt(AMT_MAX)}</span></div></div>`;
-}
-/* While dragging, update every slider copy in place (re-rendering would drop the drag). */
-function syncAmt(){
-  const lo=clampAmt(num(S.inv.min)),hi=clampAmt(num(S.inv.max));
-  document.querySelectorAll('[data-amtbox]').forEach(box=>{
-    const id=box.dataset.amtbox,a=document.getElementById(id+'-lo'),b=document.getElementById(id+'-hi');
-    if(a&&+a.value!==lo)a.value=lo;if(b&&+b.value!==hi)b.value=hi;
-    if(a)a.setAttribute('aria-valuetext',fmt(lo));if(b)b.setAttribute('aria-valuetext',fmt(hi));
-    box.querySelector('.amt-v').textContent=`${fmt(lo)} – ${fmt(hi)}`;
-    const f=box.querySelector('.fill');f.style.insetInlineStart=amtPos(lo)+'%';f.style.insetInlineEnd=(100-amtPos(hi))+'%';
-  });
-  const sum=document.querySelector('.amtbar .rng');if(sum)sum.textContent=`${fmt(lo)}–${fmt(hi)}`;
-}
 
 function bizScore(){
   const p=S.biz.p,keys=['name','sector','turnover','amount','purpose','pct','desc','strengths'];
@@ -304,34 +229,6 @@ function toast(msg){
   const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;ph.appendChild(t);
   setTimeout(()=>t.remove(),2600);
 }
-/* "It's a Match!" celebration. Called after the action's render(), because render() replaces #phone's content.
-   onGo runs when the user picks "למשא ומתן"; "אחר כך" or Esc only closes. */
-function showMatch(d,onGo){
-  const ph=$('#phone');if(!ph){if(onGo)onGo();return}
-  const old=ph.querySelector('.match');if(old)old.remove();
-  const b=bizById(d.bizId),i=invById(d.invId),ini=s=>esc(String(s||'').trim().charAt(0)||'?');
-  const cols=['#3FC0A4','#6FD598','#E0A82E','#FFFFFF','#9FE8D2','#F08A80'],rnd=(a,z)=>a+Math.random()*(z-a);
-  const conf=Array.from({length:24},(_,k)=>`<i class="m-conf" style="--x:${rnd(2,98).toFixed(1)}%;--dx:${Math.round(rnd(-60,60))}px;--d:${rnd(1.6,2.6).toFixed(2)}s;--w:${rnd(.2,.8).toFixed(2)}s;--r:${Math.round(rnd(360,900))*(k%2?1:-1)}deg;--c:${cols[k%cols.length]}"></i>`).join('');
-  const m=document.createElement('div');
-  m.className='match';m.setAttribute('role','dialog');m.setAttribute('aria-modal','true');m.setAttribute('aria-labelledby','mTitle');m.setAttribute('aria-describedby','mSub');
-  m.innerHTML=`<div class="m-confs" aria-hidden="true">${conf}</div>
-   <div class="m-pair" aria-hidden="true"><span class="m-av biz">${ini(b.name)}</span><span class="m-heart">✓</span><span class="m-av inv">${ini(i.name)}</span></div>
-   <h2 id="mTitle" class="m-title" dir="ltr">It's a Match!</h2>
-   <p id="mSub" class="m-sub">נוצרה התאמה בין <b>${esc(b.name)}</b> <b>ל־${esc(i.name)}</b>. נפתח חלון משא ומתן.</p>
-   <div class="m-btns"><button type="button" class="btn pri" data-m="go">למשא ומתן</button><button type="button" class="btn m-later" data-m="close">אחר כך</button></div>`;
-  m.addEventListener('click',e=>{const t=e.target.closest('[data-m]');if(!t)return;m.remove();if(t.dataset.m==='go'&&onGo)onGo()});
-  m.addEventListener('keydown',e=>{
-    if(e.key==='Escape'){e.preventDefault();m.remove();return}
-    if(e.key==='Tab'){const bs=m.querySelectorAll('button'),f=bs[0],l=bs[bs.length-1]; /* keep focus inside the dialog */
-      if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}
-  });
-  ph.appendChild(m);m.querySelector('[data-m="go"]').focus({preventScroll:true});
-}
-/* Shows the match celebration once per deal (d.celebrated is saved with the state). */
-function celebrate(d,onGo,fallback){
-  if(d.celebrated){toast(fallback);if(onGo)onGo();return}
-  d.celebrated=true;save();showMatch(d,onGo);
-}
 function openDeal(id){
   const d=deal(id);
   S.nf=d.prop?{amount:String(d.prop.amount),pct:String(d.prop.pct),term:String(d.prop.term)}:{amount:'',pct:'',term:''};
@@ -347,34 +244,7 @@ function acceptProp(d,by){
   d.log.push({by,text:`${RL[by]} אישר את התנאים: ${fmt(d.terms.amount)}, ${d.terms.pct}% מהרווח החוזי, ${d.terms.term} שנים`});
 }
 function afterSign(d){if(d.c.sigbiz&&d.c.siginv){d.status='signed';d.log.push({by:'biz',text:'שני הצדדים חתמו. ההפקדה נפתחה'})}}
-function deposit(d){d.status='closed';d.startAt=Date.now();d.simYear=0;d.log.push({by:'inv',text:'הכסף הופקד דרך ספק התשלומים. העסקה נסגרה'});if(!d.rained){d.rained=true;dollarRain()}}
-/* Celebration: dollars fall from the top of the screen once, when a deal closes. Skipped for reduced motion. */
-function dollarRain(){
-  try{
-    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    const old=document.getElementById('rain');if(old)old.remove();
-    const c=document.createElement('canvas');c.id='rain';c.setAttribute('aria-hidden','true');document.body.appendChild(c);
-    const dpr=window.devicePixelRatio||1,W=window.innerWidth,H=window.innerHeight;
-    c.width=W*dpr;c.height=H*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);
-    const pieces=Array.from({length:70},()=>({
-      x:Math.random()*W,y:-30-Math.random()*H*0.8,vy:2.2+Math.random()*3,vx:(Math.random()-.5)*1.2,
-      rot:Math.random()*6.28,vr:(Math.random()-.5)*.12,coin:Math.random()<.3,s:20+Math.random()*14}));
-    const t0=performance.now();
-    (function frame(t){
-      g.clearRect(0,0,W,H);let alive=0;
-      for(const p of pieces){
-        p.y+=p.vy;p.x+=p.vx+Math.sin((t+p.s*90)/400)*.6;p.rot+=p.vr;
-        if(p.y<H+40)alive++;
-        g.save();g.translate(p.x,p.y);g.rotate(p.rot);
-        if(p.coin){g.fillStyle='#E0A82E';g.beginPath();g.arc(0,0,p.s*.45,0,6.28);g.fill();g.strokeStyle='#8A5F0A';g.lineWidth=1.5;g.stroke();g.fillStyle='#6B4806'}
-        else{g.fillStyle='#2E8B57';g.fillRect(-p.s,-p.s*.5,p.s*2,p.s);g.strokeStyle='#14532D';g.lineWidth=1.5;g.strokeRect(-p.s,-p.s*.5,p.s*2,p.s);g.fillStyle='#E7F6EC'}
-        g.font='700 '+Math.round(p.s*(p.coin?.6:.8))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('$',0,1);
-        g.restore();
-      }
-      if(alive&&t-t0<5000)requestAnimationFrame(frame);else c.remove();
-    })(t0);
-  }catch(e){}
-}
+function deposit(d){d.status='closed';d.startAt=Date.now();d.simYear=0;d.log.push({by:'inv',text:'הכסף הופקד דרך ספק התשלומים. העסקה נסגרה'})}
 function fee(a){return Math.round(a*FEE*100)/100}
 
 /* ---------- actions ---------- */
@@ -406,8 +276,8 @@ const ACT={
  },
  sector(s){const a=S.inv.sectors,i=a.indexOf(s);i<0?a.push(s):a.splice(i,1);go({})},
  swipe(dir){swipeTop(dir)},
- approve(id){const d=deal(id);approveMatch(d,'biz');go({});celebrate(d,()=>openDeal(d.id),'נוצרה התאמה')},
- demoApprove(id){const d=deal(id);approveMatch(d,'biz');go({});celebrate(d,null,'בעל העסק אישר את ההתאמה')},
+ approve(id){const d=deal(id);approveMatch(d,'biz');go({});toast('נוצרה התאמה');openDeal(id)},
+ demoApprove(id){const d=deal(id);approveMatch(d,'biz');go({});toast('בעל העסק אישר את ההתאמה')},
  reject(id){deal(id).status='rejected';go({});toast('המתעניין נדחה')},
  propose(){
   const d=deal(S.screen.deal),n=S.nf,a=num(n.amount),p=num(n.pct),t=num(n.term);
@@ -437,17 +307,10 @@ const ACT={
 };
 document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t||t.disabled)return;const f=ACT[t.dataset.act];if(f){keepScroll=false;f(t.dataset.arg,t)}});
 document.addEventListener('input',e=>{
-  const t=e.target;
-  if(t.dataset&&t.dataset.amt){ /* range slider: keep min <= max, update in place, re-render on release */
-    let v=+t.value;const isLo=t.dataset.b==='inv.min';
-    if(isLo&&v>num(S.inv.max))v=num(S.inv.max);if(!isLo&&v<num(S.inv.min))v=num(S.inv.min);
-    t.value=v;setPath(t.dataset.b,String(v));syncAmt();return}
-  if(t.dataset&&t.dataset.b){keepScroll=true;setPath(t.dataset.b,t.type==='checkbox'?t.checked:t.value);render()}
+  const t=e.target;if(t.dataset&&t.dataset.b){keepScroll=true;setPath(t.dataset.b,t.type==='checkbox'?t.checked:t.value);render()}
 });
-document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('amtbar'))S.ui.amtOpen=e.target.open;save()},true);
 document.addEventListener('change',e=>{
-  const t=e.target;
-  if(t.dataset&&t.dataset.amt){keepScroll=true;render();return}if(t.dataset&&t.dataset.file&&t.files[0]){const n=t.files[0].name;const p=t.dataset.file;
+  const t=e.target;if(t.dataset&&t.dataset.file&&t.files[0]){const n=t.files[0].name;const p=t.dataset.file;
     if(p==='rf')S.rf.file=n;else S.biz[p]=n;keepScroll=true;render()}
 });
 
@@ -555,7 +418,7 @@ function invProfileView(){
   const v=S.inv;
   return{title:'פרופיל המשקיע',body:`
    <div class="card">
-    ${amountSlider('i-amt')}
+    <div class="two">${field('סכום מינימום (₪)','i-min','inv.min',v.min,{num:1})}${field('סכום מקסימום (₪)','i-max','inv.max',v.max,{num:1})}</div>
     <div class="two">${field('אחוז מקובל, מינימום','i-pmin','inv.pmin',v.pmin,{num:1})}${field('אחוז מקובל, מקסימום','i-pmax','inv.pmax',v.pmax,{num:1})}</div>
     <div><div class="small" style="font-weight:600;margin-bottom:6px">תחומים (ריק = הכול)</div><div class="btns" style="gap:6px">${SECTORS.map(s=>`<button class="chip" style="flex:0 0 auto" aria-pressed="${v.sectors.includes(s)}" data-act="sector" data-arg="${s}">${s}</button>`).join('')}</div></div>
     ${field('החוזקות שלי','i-str','inv.strengths',v.strengths,{hint:'למשל ניסיון בעסקים, ידע חשבונאי'})}
@@ -565,7 +428,7 @@ function invProfileView(){
 
 function feedView(){
   const{ok,hidden}=feedList(),v=S.inv;
-  const head=`<details class="amtbar" ${S.ui.amtOpen?'open':''}><summary><span>טווח: <span class="rng num">${fmt(clampAmt(num(v.min)))}–${fmt(clampAmt(num(v.max)))}</span> · ${v.pmin}–${v.pmax}%${hidden?` · ${hidden} עסקים מחוץ לטווח`:''}</span><span class="edit">שינוי סכום</span></summary>${amountSlider('f-amt')}</details>`;
+  const head=`<div class="row small muted"><span>טווח: ${fmt(num(v.min))}–${fmt(num(v.max))} · ${v.pmin}–${v.pmax}%</span><span>${hidden?`${hidden} עסקים מחוץ לטווח`:''}</span></div>`;
   if(!ok.length)return{title:'גילוי עסקים',body:`${head}<div class="notice">אין עוד עסקים שמתאימים לטווחים שלכם. אפשר להרחיב את הטווח בפרופיל.</div>`};
   const b=ok[0];
   return{title:'גילוי עסקים',body:`${head}
