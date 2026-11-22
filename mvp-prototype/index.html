@@ -72,6 +72,27 @@ input[type=text],select,textarea{width:100%;border:1px solid var(--line);backgro
 textarea{resize:vertical;min-height:64px}
 input.err{border-color:var(--bad)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.amt{display:flex;flex-direction:column;gap:6px;min-width:0}
+.amt .amt-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;font-weight:600}
+.amt .amt-v{color:var(--accent);font-variant-numeric:tabular-nums}
+.dual{position:relative;height:36px;margin:0 11px}
+.dual .track,.dual .fill{position:absolute;top:50%;height:6px;margin-top:-3px;border-radius:3px}
+.dual .track{inset-inline:0;background:var(--line)}
+.dual .fill{background:var(--accent)}
+.dual input[type=range]{position:absolute;inset-inline:-11px;top:0;width:calc(100% + 22px);height:36px;margin:0;background:none;-webkit-appearance:none;appearance:none;pointer-events:none}
+.dual input[type=range]::-webkit-slider-runnable-track{background:none;border:0}
+.dual input[type=range]::-moz-range-track{background:none;border:0}
+.dual input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:grab}
+.dual input[type=range]::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:grab}
+.dual input[type=range]:focus-visible{outline:none}
+.dual input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--accent);outline-offset:2px}
+.dual input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--accent);outline-offset:2px}
+.amt .amt-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+details.amtbar{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+details.amtbar summary{display:flex;justify-content:space-between;gap:8px;cursor:pointer;font-size:12.5px;color:var(--muted);list-style:none}
+details.amtbar summary::-webkit-details-marker{display:none}
+details.amtbar summary .edit{color:var(--accent);font-weight:600;white-space:nowrap}
+details.amtbar[open] summary{margin-bottom:8px}
 .req{color:var(--bad)}
 .chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:var(--surface2);color:var(--muted);white-space:nowrap}
 .chip.ok{background:var(--good-soft);color:var(--good)} .chip.warn{background:var(--warn-soft);color:var(--warn)} .chip.bad{background:var(--bad-soft);color:var(--bad)} .chip.acc{background:var(--accent-soft);color:var(--accent)}
@@ -151,6 +172,7 @@ ul.clean{margin:6px 0 0;padding-inline-start:18px;display:flex;flex-direction:co
 const KEY='mvp-demo-v1';
 const SECTORS=['מכולת','מאפייה','בית קפה','מספרה','מסעדה','חנות','סטודיו','שירותים'];
 const FEE=0.008, MAXTERM=10, AUDIT_GAP=5, DROP=0.7;
+const AMT_MIN=5000, AMT_MAX=100000, AMT_STEP=1000; /* investor amount range slider */
 
 const BIZ=[
  {id:'b1',name:'מכולת אורן',hood:'קטמון',sector:'מכולת',turnover:1100000,amount:20000,pct:10,purpose:'הקמת אגף מאפים וקירור חדש',desc:'מכולת שכונתית פתוחה 11 שנה, לקוחות קבועים ומשלוחים לבניינים סמוכים.',strengths:'לקוחות קבועים, מיקום ברחוב ראשי',score:8,verified:true,stats:{deals:2,happy:2,months:14,range:'20,000–25,000 ₪'}},
@@ -177,10 +199,11 @@ const SEED_INV=[
 function fresh(){return{v:1,role:'biz',tabBiz:'profile',tabInv:'feed',screen:null,seq:1,
  biz:{onb:0,fname:'',idn:'',reg:'',inv:'',published:false,verified:false,p:{name:'',sector:'מכולת',turnover:'',amount:'',purpose:'',pct:'',desc:'',strengths:''}},
  inv:{onb:0,fname:'',idn:'',min:'20000',max:'25000',pmin:'8',pmax:'15',sectors:[],strengths:''},
- swipes:{},deals:[],nf:{amount:'',pct:'',term:''},rf:{pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false}}}
+ ui:{amtOpen:false},swipes:{},deals:[],nf:{amount:'',pct:'',term:''},rf:{pre:'',a:'',b:'',c:'',d:'',expl:'',file:'',ack:false}}}
 let S;
 try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
 if(!S||S.v!==1)S=fresh();
+S.ui=S.ui||{amtOpen:false};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* ---------- helpers ---------- */
@@ -198,6 +221,30 @@ const meter=n=>`<div class="meter" aria-hidden="true">${Array.from({length:10},(
 const field=(label,id,bind,val,o={})=>`<label class="f">${label}${o.req?' <span class="req">*</span>':''}${o.hint?`<span class="hint">${o.hint}</span>`:''}${
   o.area?`<textarea id="${id}" data-b="${bind}" ${o.dis?'disabled':''}>${esc(val)}</textarea>`
   :`<input type="text" id="${id}" data-b="${bind}" value="${esc(val)}" ${o.num?'inputmode="decimal"':''} ${o.dis?'disabled':''} ${o.err?'class="err"':''}>`}</label>`;
+/* Two-handle range slider for the investor's amount range. Bound to inv.min / inv.max. */
+const clampAmt=n=>Math.min(AMT_MAX,Math.max(AMT_MIN,Math.round(n/AMT_STEP)*AMT_STEP));
+const amtPos=n=>(clampAmt(n)-AMT_MIN)/(AMT_MAX-AMT_MIN)*100;
+function amountSlider(id){
+  const lo=clampAmt(num(S.inv.min)),hi=clampAmt(num(S.inv.max));
+  const rng=(suf,bind,val,lab)=>`<input type="range" id="${id}-${suf}" data-b="${bind}" data-amt="${id}" min="${AMT_MIN}" max="${AMT_MAX}" step="${AMT_STEP}" value="${val}" aria-label="${lab}" aria-valuetext="${fmt(val)}">`;
+  return`<div class="amt" data-amtbox="${id}">
+   <div class="amt-h"><span>סכום שאני מוכן/ה להשקיע</span><span class="amt-v" aria-live="polite">${fmt(lo)} – ${fmt(hi)}</span></div>
+   <div class="dual"><span class="track"></span><span class="fill" style="inset-inline-start:${amtPos(lo)}%;inset-inline-end:${100-amtPos(hi)}%"></span>
+    ${rng('lo','inv.min',lo,'סכום מינימום')}${rng('hi','inv.max',hi,'סכום מקסימום')}</div>
+   <div class="amt-scale"><span>${fmt(AMT_MIN)}</span><span>${fmt(AMT_MAX)}</span></div></div>`;
+}
+/* While dragging, update every slider copy in place (re-rendering would drop the drag). */
+function syncAmt(){
+  const lo=clampAmt(num(S.inv.min)),hi=clampAmt(num(S.inv.max));
+  document.querySelectorAll('[data-amtbox]').forEach(box=>{
+    const id=box.dataset.amtbox,a=document.getElementById(id+'-lo'),b=document.getElementById(id+'-hi');
+    if(a&&+a.value!==lo)a.value=lo;if(b&&+b.value!==hi)b.value=hi;
+    if(a)a.setAttribute('aria-valuetext',fmt(lo));if(b)b.setAttribute('aria-valuetext',fmt(hi));
+    box.querySelector('.amt-v').textContent=`${fmt(lo)} – ${fmt(hi)}`;
+    const f=box.querySelector('.fill');f.style.insetInlineStart=amtPos(lo)+'%';f.style.insetInlineEnd=(100-amtPos(hi))+'%';
+  });
+  const sum=document.querySelector('.amtbar .rng');if(sum)sum.textContent=`${fmt(lo)}–${fmt(hi)}`;
+}
 
 function bizScore(){
   const p=S.biz.p,keys=['name','sector','turnover','amount','purpose','pct','desc','strengths'];
@@ -335,10 +382,17 @@ const ACT={
 };
 document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t||t.disabled)return;const f=ACT[t.dataset.act];if(f){keepScroll=false;f(t.dataset.arg,t)}});
 document.addEventListener('input',e=>{
-  const t=e.target;if(t.dataset&&t.dataset.b){keepScroll=true;setPath(t.dataset.b,t.type==='checkbox'?t.checked:t.value);render()}
+  const t=e.target;
+  if(t.dataset&&t.dataset.amt){ /* range slider: keep min <= max, update in place, re-render on release */
+    let v=+t.value;const isLo=t.dataset.b==='inv.min';
+    if(isLo&&v>num(S.inv.max))v=num(S.inv.max);if(!isLo&&v<num(S.inv.min))v=num(S.inv.min);
+    t.value=v;setPath(t.dataset.b,String(v));syncAmt();return}
+  if(t.dataset&&t.dataset.b){keepScroll=true;setPath(t.dataset.b,t.type==='checkbox'?t.checked:t.value);render()}
 });
+document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('amtbar'))S.ui.amtOpen=e.target.open;save()},true);
 document.addEventListener('change',e=>{
-  const t=e.target;if(t.dataset&&t.dataset.file&&t.files[0]){const n=t.files[0].name;const p=t.dataset.file;
+  const t=e.target;
+  if(t.dataset&&t.dataset.amt){keepScroll=true;render();return}if(t.dataset&&t.dataset.file&&t.files[0]){const n=t.files[0].name;const p=t.dataset.file;
     if(p==='rf')S.rf.file=n;else S.biz[p]=n;keepScroll=true;render()}
 });
 
@@ -446,7 +500,7 @@ function invProfileView(){
   const v=S.inv;
   return{title:'פרופיל המשקיע',body:`
    <div class="card">
-    <div class="two">${field('סכום מינימום (₪)','i-min','inv.min',v.min,{num:1})}${field('סכום מקסימום (₪)','i-max','inv.max',v.max,{num:1})}</div>
+    ${amountSlider('i-amt')}
     <div class="two">${field('אחוז מקובל, מינימום','i-pmin','inv.pmin',v.pmin,{num:1})}${field('אחוז מקובל, מקסימום','i-pmax','inv.pmax',v.pmax,{num:1})}</div>
     <div><div class="small" style="font-weight:600;margin-bottom:6px">תחומים (ריק = הכול)</div><div class="btns" style="gap:6px">${SECTORS.map(s=>`<button class="chip" style="flex:0 0 auto" aria-pressed="${v.sectors.includes(s)}" data-act="sector" data-arg="${s}">${s}</button>`).join('')}</div></div>
     ${field('החוזקות שלי','i-str','inv.strengths',v.strengths,{hint:'למשל ניסיון בעסקים, ידע חשבונאי'})}
@@ -456,7 +510,7 @@ function invProfileView(){
 
 function feedView(){
   const{ok,hidden}=feedList(),v=S.inv;
-  const head=`<div class="row small muted"><span>טווח: ${fmt(num(v.min))}–${fmt(num(v.max))} · ${v.pmin}–${v.pmax}%</span><span>${hidden?`${hidden} עסקים מחוץ לטווח`:''}</span></div>`;
+  const head=`<details class="amtbar" ${S.ui.amtOpen?'open':''}><summary><span>טווח: <span class="rng num">${fmt(clampAmt(num(v.min)))}–${fmt(clampAmt(num(v.max)))}</span> · ${v.pmin}–${v.pmax}%${hidden?` · ${hidden} עסקים מחוץ לטווח`:''}</span><span class="edit">שינוי סכום</span></summary>${amountSlider('f-amt')}</details>`;
   if(!ok.length)return{title:'גילוי עסקים',body:`${head}<div class="notice">אין עוד עסקים שמתאימים לטווחים שלכם. אפשר להרחיב את הטווח בפרופיל.</div>`};
   const b=ok[0];
   return{title:'גילוי עסקים',body:`${head}
