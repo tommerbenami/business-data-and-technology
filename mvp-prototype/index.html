@@ -122,6 +122,7 @@ ul.clean{margin:6px 0 0;padding-inline-start:18px;display:flex;flex-direction:co
 .sig{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:10px;background:var(--surface2)}
 .big{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
 .num{font-variant-numeric:tabular-nums}
+#rain{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50}
 @media (prefers-reduced-motion:reduce){.swc{transition:none}}
 </style>
 
@@ -244,7 +245,34 @@ function acceptProp(d,by){
   d.log.push({by,text:`${RL[by]} אישר את התנאים: ${fmt(d.terms.amount)}, ${d.terms.pct}% מהרווח החוזי, ${d.terms.term} שנים`});
 }
 function afterSign(d){if(d.c.sigbiz&&d.c.siginv){d.status='signed';d.log.push({by:'biz',text:'שני הצדדים חתמו. ההפקדה נפתחה'})}}
-function deposit(d){d.status='closed';d.startAt=Date.now();d.simYear=0;d.log.push({by:'inv',text:'הכסף הופקד דרך ספק התשלומים. העסקה נסגרה'})}
+function deposit(d){d.status='closed';d.startAt=Date.now();d.simYear=0;d.log.push({by:'inv',text:'הכסף הופקד דרך ספק התשלומים. העסקה נסגרה'});if(!d.rained){d.rained=true;dollarRain()}}
+/* Celebration: dollars fall from the top of the screen once, when a deal closes. Skipped for reduced motion. */
+function dollarRain(){
+  try{
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const old=document.getElementById('rain');if(old)old.remove();
+    const c=document.createElement('canvas');c.id='rain';c.setAttribute('aria-hidden','true');document.body.appendChild(c);
+    const dpr=window.devicePixelRatio||1,W=window.innerWidth,H=window.innerHeight;
+    c.width=W*dpr;c.height=H*dpr;const g=c.getContext('2d');g.scale(dpr,dpr);
+    const pieces=Array.from({length:70},()=>({
+      x:Math.random()*W,y:-30-Math.random()*H*0.8,vy:2.2+Math.random()*3,vx:(Math.random()-.5)*1.2,
+      rot:Math.random()*6.28,vr:(Math.random()-.5)*.12,coin:Math.random()<.3,s:20+Math.random()*14}));
+    const t0=performance.now();
+    (function frame(t){
+      g.clearRect(0,0,W,H);let alive=0;
+      for(const p of pieces){
+        p.y+=p.vy;p.x+=p.vx+Math.sin((t+p.s*90)/400)*.6;p.rot+=p.vr;
+        if(p.y<H+40)alive++;
+        g.save();g.translate(p.x,p.y);g.rotate(p.rot);
+        if(p.coin){g.fillStyle='#E0A82E';g.beginPath();g.arc(0,0,p.s*.45,0,6.28);g.fill();g.strokeStyle='#8A5F0A';g.lineWidth=1.5;g.stroke();g.fillStyle='#6B4806'}
+        else{g.fillStyle='#2E8B57';g.fillRect(-p.s,-p.s*.5,p.s*2,p.s);g.strokeStyle='#14532D';g.lineWidth=1.5;g.strokeRect(-p.s,-p.s*.5,p.s*2,p.s);g.fillStyle='#E7F6EC'}
+        g.font='700 '+Math.round(p.s*(p.coin?.6:.8))+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText('$',0,1);
+        g.restore();
+      }
+      if(alive&&t-t0<5000)requestAnimationFrame(frame);else c.remove();
+    })(t0);
+  }catch(e){}
+}
 function fee(a){return Math.round(a*FEE*100)/100}
 
 /* ---------- actions ---------- */
